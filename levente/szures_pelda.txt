@@ -1,0 +1,35 @@
+--------------------
+Search_bar: sales coordinator asd
+Location: pécs baranya
+--------------------
+#Date posted#
+	Any_Time: 
+	Past_Month: X
+	Past_Week: 
+	Past_24_hours:
+--------------------
+#Experience Level#
+	Entry_level: X
+	Associate: 
+	Mid-Senior_level: 
+	Internship: X
+	Director: 
+	Executive: 
+--------------------
+#Job Type#
+	Full-time: 
+	Contract: 
+	Part-time: 
+	Internship: X
+	Temporary: 
+	Other: 
+	Volunteer: X
+--------------------
+Remote (Y/N): N
+Easy_Apply (Y/N): Y
+Under_10_Applicants (Y/N): N
+--------------------
+Company: tesla ups, bosch magyarország, telekom hungary zrt
+Industry: banking, investment banking
+Job_Function: sales, other
+--------------------
