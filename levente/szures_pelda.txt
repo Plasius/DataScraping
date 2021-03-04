@@ -1,5 +1,5 @@
 --------------------
-Search_bar: sales coordinator asd
+Search_bar: sales coordinator
 Location: pécs baranya
 --------------------
 #Date posted#
@@ -25,11 +25,11 @@ Location: pécs baranya
 	Other: 
 	Volunteer: X
 --------------------
-Remote (Y/N): N
+Remote (Y/N): Y
 Easy_Apply (Y/N): Y
 Under_10_Applicants (Y/N): N
 --------------------
-Company: tesla ups, bosch magyarország, telekom hungary zrt
+Company: tesla, youth business group
 Industry: banking, investment banking
-Job_Function: sales, other
+Job_Function: human resources, other
 --------------------
