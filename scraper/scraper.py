@@ -3,8 +3,12 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import time
 
-driver = webdriver.Chrome("chromedriver.exe")
+options = webdriver.ChromeOptions() 
+options.add_argument("user-data-dir=/scraperdata")
+driver = webdriver.Chrome(chrome_options=options)
+
 
 def read_input():
 	#txt sorainak ertelmezese
@@ -61,24 +65,34 @@ def read_input():
 
 def login():
 	#chrome megnyitasa
-	driver.get("https://www.linkedin.com/login")
+	driver.get("https://www.linkedin.com/")
 	driver.maximize_window()
 
-	#cookies elfogadas
-	cookies=driver.find_element_by_xpath("//button[@data-control-name='ga-cookie.consent.accept.v3']")
-	login=WebDriverWait(driver, 5).until(EC.visibility_of(cookies))
-	cookies.click()
+	try:
+		#cookies elfogadas
+		cookies=driver.find_element_by_xpath("//button[@data-control-name='ga-cookie.consent.accept.v3']")
+		login=WebDriverWait(driver, 5).until(EC.visibility_of(cookies))
+		cookies.click()
+		time.sleep(3)
+	except:
+		print('sutik elfogadva')
+	
+		
+	try:
+		#felhasznaloi adatok bevitele
+		username=driver.find_element_by_name("session_key")
+		login=WebDriverWait(driver, 5).until(EC.visibility_of(username))
+		username.send_keys("jokofam251@mailnest.net")
 
-	#felhasznaloi adatok bevitele
-	username=driver.find_element_by_name("session_key")
-	login=WebDriverWait(driver, 5).until(EC.visibility_of(username))
-	username.send_keys("bitfakeprofile@gmail.com")
-
-	password=driver.find_element_by_name("session_password")
-	login=WebDriverWait(driver, 5).until(EC.visibility_of(password))
-	password.send_keys("bitfakeprofile42")
-	password.send_keys(Keys.RETURN)
-
+		password=driver.find_element_by_name("session_password")
+		login=WebDriverWait(driver, 5).until(EC.visibility_of(password))
+		password.send_keys("azsxdcfv")
+		
+		password.send_keys(Keys.RETURN)
+		
+		time.sleep(3)
+	except:
+		print('Login átugrása')
 
 read_input()	
 login()
