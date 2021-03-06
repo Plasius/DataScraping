@@ -62,26 +62,34 @@ def read_input():
 
 
 def login():
-	#chrome megnyitasa
-	driver.get("https://www.linkedin.com/login")
+	# chrome megnyitasa
+	driver.get("https://www.linkedin.com/")
 	driver.maximize_window()
 
-	#cookies elfogadas
-	cookies=driver.find_element_by_xpath("//button[@data-control-name='ga-cookie.consent.accept.v3']")
-	login=WebDriverWait(driver, 5).until(EC.visibility_of(cookies))
-	cookies.click()
+	try:
+		# cookies elfogadas
+		cookies = driver.find_element_by_xpath("//button[@data-control-name='ga-cookie.consent.accept.v3']")
+		login = WebDriverWait(driver, 5).until(EC.visibility_of(cookies))
+		cookies.click()
+		time.sleep(3)
+	except:
+		print('sutik elfogadva')
 
-	#felhasznaloi adatok bevitele
-	username=driver.find_element_by_name("session_key")
-	login=WebDriverWait(driver, 5).until(EC.visibility_of(username))
-	username.send_keys("bitfakeprofile42@gmail.com")
+	try:
+		# felhasznaloi adatok bevitele
+		username = driver.find_element_by_name("session_key")
+		login = WebDriverWait(driver, 5).until(EC.visibility_of(username))
+		username.send_keys("jokofam251@mailnest.net")
 
-	password=driver.find_element_by_name("session_password")
-	login=WebDriverWait(driver, 5).until(EC.visibility_of(password))
-	password.send_keys("strong42")
-	password.send_keys(Keys.RETURN)
+		password = driver.find_element_by_name("session_password")
+		login = WebDriverWait(driver, 5).until(EC.visibility_of(password))
+		password.send_keys("azsxdcfv")
 
+		password.send_keys(Keys.RETURN)
 
+		time.sleep(3)
+	except:
+		print('Login átugrása')
 read_input()	
 login()
 
@@ -99,12 +107,12 @@ job.click()
 
 time.sleep(1)
 i=0
-k=-1
 o=0
+s=0
 kesz=[]
 while o==0:
 	try:
-                #végigmegy az állásajánlatokon
+    	#végigmegy az állásajánlatokon
 		while i==0:
 			time.sleep(1)
 			jobs = driver.find_elements_by_xpath("//div[@class='mr1 artdeco-entity-lockup__image artdeco-entity-lockup__image--type-square ember-view']")
@@ -114,17 +122,22 @@ while o==0:
 			else:
 				for job in jobs:
 					job.click()
-					time.sleep(0.3)
+					time.sleep(0.7)
 					kesz.append(job)
 		#átlép a következő oldalra
-		if k==7:
-			k=3
-		i=0
-		time.sleep(2)
-		k+=1
 		oldalak=driver.find_elements_by_xpath("//li[@class='artdeco-pagination__indicator artdeco-pagination__indicator--number ember-view']")
-		oldalak[k].click()
+		time.sleep(2)
+
+		k=oldalak[s]
+		for oldal in oldalak:
+			if k==oldal:
+				oldalak[s].click()
+				s += 1
+				i=0
+				kesz=[]
+
+
 	except:
 		o=1
 time.sleep(2)
-driver.quit()
+#driver.quit()
