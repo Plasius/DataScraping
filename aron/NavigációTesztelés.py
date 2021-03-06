@@ -104,15 +104,17 @@ time.sleep(2)
 job=driver.find_element_by_xpath("//div[@class='job-card-square__main relative display-flex flex-grow-1 flex-column align-items-stretch']")
 job=WebDriverWait(driver, 5).until(EC.visibility_of(job))
 job.click()
+time.sleep(2)
 
-time.sleep(1)
 i=0
 o=0
+h=1
 s=0
 kesz=[]
 while o==0:
 	try:
     	#végigmegy az állásajánlatokon
+		h+=1
 		while i==0:
 			time.sleep(1)
 			jobs = driver.find_elements_by_xpath("//div[@class='mr1 artdeco-entity-lockup__image artdeco-entity-lockup__image--type-square ember-view']")
@@ -125,19 +127,14 @@ while o==0:
 					time.sleep(0.7)
 					kesz.append(job)
 		#átlép a következő oldalra
-		oldalak=driver.find_elements_by_xpath("//li[@class='artdeco-pagination__indicator artdeco-pagination__indicator--number ember-view']")
+		time.sleep(1)
+		oldalak=driver.find_element_by_xpath("//button[@aria-label='Page {0}']".format(h))
 		time.sleep(2)
-
-		k=oldalak[s]
-		for oldal in oldalak:
-			if k==oldal:
-				oldalak[s].click()
-				s += 1
-				i=0
-				kesz=[]
-
-
+		oldalak.click()
+		i=0
+		kesz=[]
 	except:
 		o=1
+
 time.sleep(2)
-#driver.quit()
+driver.quit()
