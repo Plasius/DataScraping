@@ -1,6 +1,6 @@
 --------------------
 Search_bar: sales coordinator
-Location: pécs baranya
+Location: Budapest
 --------------------
 #Date posted#
 	Any_Time: 

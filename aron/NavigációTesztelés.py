@@ -79,7 +79,7 @@ def login():
 		# felhasznaloi adatok bevitele
 		username = driver.find_element_by_name("session_key")
 		login = WebDriverWait(driver, 5).until(EC.visibility_of(username))
-		username.send_keys("jokofam251@mailnest.net")
+		username.send_keys("moreda7823@566dh.com")
 
 		password = driver.find_element_by_name("session_password")
 		login = WebDriverWait(driver, 5).until(EC.visibility_of(password))
