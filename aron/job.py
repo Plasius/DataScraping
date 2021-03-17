@@ -1,20 +1,11 @@
 #állásajánlat adatai
-class job:
-    #13db adat van
-    def __init__(self, megnevezes, ceg, varos, jelentkezok, org, company, xplvl, type, slvl, industry, emptype, functions, szoveg):
-        self.megnevezes=megnevezes
-        self.ceg=ceg
-        self.varos=varos
-        self.jelentkezok=jelentkezok
-        self.org=org
+class Job:
+    def __init__(self, title, company, location, seniority, industry, employment_type, job_functions, description):
+        self.title=title
         self.company=company
-        self.xplvl=xplvl
-        self.type=type
-        self.slvl=slvl
+        self.location=location
+        self.seniority=seniority
         self.industry=industry
-        self.emptype=emptype
-        self.functions=functions
-        self.szoveg=szoveg
-
-
-
+        self.employment_type=employment_type
+        self.job_functions=job_functions
+        self.description=description
