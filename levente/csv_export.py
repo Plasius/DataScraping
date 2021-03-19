@@ -1,4 +1,6 @@
 #állásajánlat adatai
+import codecs
+
 class Job:
     def __init__(self, title, company, location, seniority, industry, employment_type, job_functions, description):
         self.title=title
@@ -11,13 +13,13 @@ class Job:
         self.description=description
 
 #példa ajánlatok
-pelda1=Job('a1','a2','a3','a4','a5','a6','a7','a8 ő')
-pelda2=Job('b1','b2','b3','b4','b5','b6','b7','b8 á')
-pelda3=Job('c1','c2','c3','c4','c5','c6','c7','c8 ű')
+pelda1=Job('a1','a2','a3','a4','a5','a6','a7','a8')
+pelda2=Job('b1','b2','b3','b4','b5','b6','b7','bá8')
+pelda3=Job('c1','c2','c3','c4','c5','c6','c7','c8')
 #példa lista
 lista=[pelda1,pelda2,pelda3]
 
-file=open('exported.csv','w')
+file= codecs.open('exported.csv','w', 'utf-8')
 
 #fejléc
 for att in lista[0].__dict__.keys():
