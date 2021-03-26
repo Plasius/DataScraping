@@ -1,4 +1,4 @@
-"title","company","location","seniority","industry","employment_type","job_functions","description",
-"a1","a2","a3","a4","a5","a6","a7","a8",
-"b1","b2","b3","b4","b5","b6","b7","bá8",
-"c1","c2","c3","c4","c5","c6","c7","c8",
+"title","company","location","seniority","employment_type","industry_list1","industry_list2","industry_list3","job_functions_list1","job_functions_list2","job_functions_list3",
+"title1","company1","location1","seniority1","employment1","ind A","ind B","","job A","job B","job C",
+"title2","company2","location2","seniority2","employment2","ind A","ind B","ind C","job A","job B","",
+"title3","company3","location3","seniority3","employment3","","","","job A","","",
