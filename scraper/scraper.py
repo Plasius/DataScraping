@@ -89,8 +89,8 @@ def login(driver):
 	except:
 		print('Login átugrása')
 
-def extract(driver) ->Munka:
-	munka = Munka.Munka('','','','','','','')
+def extract(driver) -> Munka:
+	munka = Munka.Munka('','','','','',[],[])
 
 	title = driver.find_elements_by_class_name("jobs-details-top-card__job-title")
 	munka.title = title[0].text
@@ -118,12 +118,10 @@ def extract(driver) ->Munka:
 			munka.employment_type = descr.text
 
 		elif titlr == 'Industry':
-			munka.industry_list = []
 			for item in descr.find_elements_by_xpath(".//*"):
 				munka.industry_list.append(item.text)
 
 		elif titlr == 'Job Functions':
-			munka.job_functions_list = []
 			for item in descr.find_elements_by_xpath(".//*"):
 				munka.job_functions_list.append(item.text)
 			
