@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 import Param
-import Credentials
+import Munka
 
 def init_driver() -> webdriver.Chrome:
 	options = webdriver.ChromeOptions() 
@@ -77,7 +77,7 @@ def login(driver):
 		#felhasznaloi adatok bevitele
 		username=driver.find_element_by_name("session_key")
 		WebDriverWait(driver, 5).until(EC.visibility_of(username))
-		username.send_keys("yasido6539@gameqo.com")
+		username.send_keys("moteli4351@astarmax.com")
 
 		password=driver.find_element_by_name("session_password")
 		WebDriverWait(driver, 5).until(EC.visibility_of(password))
@@ -89,7 +89,49 @@ def login(driver):
 	except:
 		print('Login átugrása')
 
+def extract(driver) ->Munka:
+	munka = Munka.Munka('','','','','','','')
+
+	title = driver.find_elements_by_class_name("jobs-details-top-card__job-title")
+	munka.title = title[0].text
+
+	company = driver.find_elements_by_class_name("jobs-details-top-card__company-url")
+	munka.company = company[0].text
+
+	location = driver.find_elements_by_class_name("jobs-details-top-card__bullet")
+	munka.location = location[0].text
+
+	group = driver.find_elements_by_class_name('jobs-box__group')
+	#tulajdonsag
+	for element in group:
+
+		#cim es a konkret
+		children = element.find_elements_by_xpath(".//*")
+
+		#konkret
+		titlr = children[0].text
+		descr = children[1]
+
+		if titlr == 'Seniority Level':
+			munka.seniority = descr.text
+		elif titlr == 'Employment Type':
+			munka.employment_type = descr.text
+
+		elif titlr == 'Industry':
+			munka.industry_list = []
+			for item in descr.find_elements_by_xpath(".//*"):
+				munka.industry_list.append(item.text)
+
+		elif titlr == 'Job Functions':
+			munka.job_functions_list = []
+			for item in descr.find_elements_by_xpath(".//*"):
+				munka.job_functions_list.append(item.text)
+			
+	return munka
+
 def navigate(driver):
+	munkak = []
+
 	i=0
 	o=0
 	h=1
@@ -108,6 +150,11 @@ def navigate(driver):
 					for job in jobs:
 						job.click()
 						sleep(2)
+						
+						#extract
+						munkak.append(extract(driver))
+						print(munkak[-1])
+
 						kesz.append(job)
 			#átlép a következő oldalra
 			sleep(1)
@@ -121,6 +168,8 @@ def navigate(driver):
 
 	sleep(2)
 	driver.quit()
+
+	return munkak
 
 def filter_results(driver, param):
 	#SZŰRÉS
@@ -206,9 +255,13 @@ filters = read_txt()
 
 login(driver)
 
-driver.get("https://www.linkedin.com/jobs/search")
+driver.get("https://www.linkedin.com/jobs/search/")
 sleep(5)
 
-navigate(driver)
-
 #filter_results(driver, filters)
+
+munkak = navigate(driver)
+
+#export(munkak)
+
+driver.close()
