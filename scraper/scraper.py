@@ -6,6 +6,28 @@ from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 import Param
 import Munka
+import codecs
+
+def export(lista):
+	file= codecs.open('exported.csv','w', 'utf-8')
+
+	#fejléc
+	for att in lista[0].__dict__.keys():
+		if att.split('_')[-1]=='list':
+			for repeat in range(1,4): file.write('"'+str(att.upper())+str(repeat)+'",')
+		else: file.write('"'+str(att.upper())+'",')
+	file.write('\n')
+
+	#ajánlatok
+	for ajanlat in lista:
+		for att, value in ajanlat.__dict__.items():
+			if type(value) is list:
+				value += ['']*(3 - len(value))
+				for object in value: file.write('"'+str(object)+'",')
+			else: file.write('"'+str(value)+'",')
+		file.write('\n')
+
+	file.close()
 
 def init_driver() -> webdriver.Chrome:
 	options = webdriver.ChromeOptions() 
@@ -18,7 +40,7 @@ def read_txt() -> Param:
 	keywords_line = 1
 	location_line = 2
 	date_posted_start,date_posted_end = 5, 9
-	experience_level_start,experience_level_end = 11, 17
+	experience_level_start, experience_level_end = 11, 17
 	job_type_start,job_type_end = 19, 26
 	remote_line = 27
 	easy_apply_line = 28
@@ -41,7 +63,7 @@ def read_txt() -> Param:
 	#több érték is lehet
 	experience_levels_list = [level[0].strip(level[0][-1]).replace('_',' ') for level in input[experience_level_start:experience_level_end] if len(level) > 1]
 	job_types_list = [type[0].strip(type[0][-1]) for type in input[job_type_start:job_type_end] if len(type)>1]
-
+	print(job_types_list)
 	#true or false
 	is_remote = True if input[remote_line][-1]=='Y' else False
 	is_easy_apply = True if input[easy_apply_line][-1]=='Y' else False   
@@ -77,7 +99,7 @@ def login(driver):
 		#felhasznaloi adatok bevitele
 		username=driver.find_element_by_name("session_key")
 		WebDriverWait(driver, 5).until(EC.visibility_of(username))
-		username.send_keys("moteli4351@astarmax.com")
+		username.send_keys("hadeg56830@ddwfzp.com")
 
 		password=driver.find_element_by_name("session_password")
 		WebDriverWait(driver, 5).until(EC.visibility_of(password))
@@ -95,11 +117,23 @@ def extract(driver) -> Munka:
 	title = driver.find_elements_by_class_name("jobs-details-top-card__job-title")
 	munka.title = title[0].text
 
-	company = driver.find_elements_by_class_name("jobs-details-top-card__company-url")
-	munka.company = company[0].text
+	try:
+		company = driver.find_elements_by_class_name("jobs-details-top-card__company-url")
+		munka.company = company[0].text
 
-	location = driver.find_elements_by_class_name("jobs-details-top-card__bullet")
-	munka.location = location[0].text
+		location = driver.find_elements_by_class_name("jobs-details-top-card__bullet")
+		munka.location = location[0].text
+	except:
+		data = driver.find_element_by_class_name('jobs-details-top-card__company-info')
+		children = data.find_elements_by_xpath(".//*")
+
+		#get unlinked company name
+		if children[0].text == 'Company Name':
+			munka.company = data.text.splitlines()[1]
+		else:
+			munka.company = children[0].text
+
+		munka.location = children[2].text
 
 	group = driver.find_elements_by_class_name('jobs-box__group')
 	#tulajdonsag
@@ -141,7 +175,7 @@ def navigate(driver):
 			while i==0:
 				sleep(1)
 				jobs = driver.find_elements_by_xpath("//div[@class='mr1 artdeco-entity-lockup__image artdeco-entity-lockup__image--type-square ember-view']")
-				jobs=[x for x in jobs if x not in kesz]
+				jobs = [x for x in jobs if x not in kesz]
 				if jobs==[]:
 					i=1
 				else:
@@ -171,95 +205,110 @@ def navigate(driver):
 
 def filter_results(driver, param):
 	#SZŰRÉS
+	'''
+	Filter options:
+	- keywords
+	- location
+	- Date Posted - single choice
+	- Experience Level - multiple choice
+	- Job Type - multiple choice
+	- Remote - true/false
+	- Easy Apply - true/false
+	'''
 	
 	sleep(5)
 
 	#szöveges szűrések
-	search_bar = driver.find_elements_by_css_selector("[aria-label='Search by title, skill, or company']")[0].find_elements_by_tag_name("input")[0]
-	search_bar.send_keys(str(param.keywords))
-	sleep(5)
+	if param.keywords:
+		search_bar = driver.find_elements_by_css_selector("[aria-label='Search by title, skill, or company']")[0].find_elements_by_tag_name("input")[0]
+		search_bar.send_keys(str(param.keywords))
+		sleep(5)
 
-	location_bar = driver.find_elements_by_css_selector("[aria-label='City, state, or zip code']")[0].find_elements_by_tag_name("input")[0]
-	location_bar.send_keys(Keys.CONTROL, 'a')
-	location_bar.send_keys(Keys.BACKSPACE)
-	location_bar.send_keys(str(param.location))
-	location_bar.send_keys(Keys.RETURN)
-	sleep(5)
+	if param.location:
+		location_bar = driver.find_elements_by_css_selector("[aria-label='City, state, or zip code']")[0].find_elements_by_tag_name("input")[0]
+		location_bar.send_keys(Keys.CONTROL, 'a')
+		location_bar.send_keys(Keys.BACKSPACE)
+		location_bar.send_keys(str(param.location))
+		location_bar.send_keys(Keys.RETURN)
+		sleep(5)
 
 	#Open the dropdown of the filter, choose filter and hit esc - Date Posted
-	driver.find_element_by_xpath("//button[text()='Date Posted']").click()
-	print('clicked')
+	if param.date:
+		driver.find_element_by_xpath("//button[text()='Date Posted']").click()
+		sleep(2)
+		
+		input_el_date_posted = driver.find_element_by_xpath("//span[text()=\'"+param.date[0]+"\']")
+		input_el_date_posted = input_el_date_posted.find_element_by_xpath('..')
+		input_el_date_posted = input_el_date_posted.find_element_by_xpath('..')
+		input_el_date_posted.click()
+		sleep(2)
 
-	sleep(3)
-	input_el_date_posted = driver.find_element_by_xpath("//span[text()=\'"+param.date[0]+"\']")
-	input_el_date_posted = input_el_date_posted.find_element_by_xpath('..')
-	input_el_date_posted = input_el_date_posted.find_element_by_xpath('..')
-	input_el_date_posted.click()
-	sleep(3)
-	webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+		webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+		sleep(2)
 
 	#Open the dropdown of the filter, choose filter and hit esc - Experience Level
-	sleep(2)
-	experience_level = driver.find_element_by_xpath("//button[text()='Experience Level']")
-	sleep(2)
-	experience_level.click()
-	sleep(2)
+	if param.experience_levels_list:
+		experience_level = driver.find_element_by_xpath("//button[text()='Experience Level']")
+		experience_level.click()
+		sleep(2)
 
-	for level in param.experience_levels_list:
-		input_el_experience_level=driver.find_element_by_xpath("//span[text()=\'"+level+"\']")
-		input_el_experience_level = input_el_experience_level.find_element_by_xpath('..')
-		input_el_experience_level = input_el_experience_level.find_element_by_xpath('..')
-		input_el_experience_level.click()
+		for level in param.experience_levels_list:
+			try:
+				input_el_experience_level = driver.find_element_by_xpath("//span[text()=\'"+level+"\']")
+				input_el_experience_level = input_el_experience_level.find_element_by_xpath('..')
+				input_el_experience_level = input_el_experience_level.find_element_by_xpath('..')
+				input_el_experience_level.click()
+			except:
+				print('failed to select experience level: '+ level)
+			sleep(1)
+
 		
-	webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+		webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+		sleep(2)
 		
 	#Open the dropdown of the filter, choose filter and hit esc - Job Type
-	sleep(2)
-	job_type = driver.find_element_by_xpath("//button[text()='Job Type']")
-	sleep(2)
-	job_type.click()
-	sleep(2)
+	if param.job_types_list:
+		job_type = driver.find_element_by_xpath("//button[text()='Job Type']")
+		job_type.click()
+		sleep(2)
+
+		for pos in param.job_types_list:
+			try:
+				input_el_job_type = driver.find_element_by_xpath("//label[@for=\'"+"jobType-"+pos[0]+"\']")
+				input_el_job_type.click()
+			except:
+				print('failed to select job type: ' + pos)
+			sleep(1)
+			
+		webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+		sleep(2)
 
 	#Push button if filter is true for remote
-	if param.is_remote is True:
+	if param.is_remote == True:
 		remote = driver.find_element_by_xpath("//button[text()='Remote']")
 		remote.click()
+		sleep(2)
 		
 	#Push button if filter is true for easy apply
-	if param.is_easy_apply is True:
+	if param.is_easy_apply == True:
 		easy_apply = driver.find_element_by_xpath("//button[text()='Easy Apply']")
-		easy_apply.click()    
-		
-	all_filters = driver.find_element_by_xpath("//button[text()='All filters']")
-	sleep(2)
-	all_filters.click()    
-	sleep(4)
-
-	#Click under 10 filter
-	under_10=driver.find_elements_by_class_name('jobs-search-advanced-filters__binary-toggle')
-	sleep(4)
-	under_10[2].click()
-
-
-	for job in param.job_types_list:
-		input_el_job_type=driver.find_element_by_xpath("//span[text()=\'"+job+"\']")
-		input_el_job_type = input_el_job_type.find_element_by_xpath('..')
-		input_el_job_type = input_el_job_type.find_element_by_xpath('..')
-		input_el_job_type.click()
+		easy_apply.click()
+		sleep(2)   
 
 
 driver = init_driver()
-filters = read_txt()
+
+param = read_txt()
 
 login(driver)
 
 driver.get("https://www.linkedin.com/jobs/search/")
 sleep(5)
 
-#filter_results(driver, filters)
+filter_results(driver, param)
 
 munkak = navigate(driver)
 
-#export(munkak)
+export(munkak)
 
 driver.close()

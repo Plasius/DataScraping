@@ -1,28 +1,28 @@
 --------------------
-Search_bar: sales coordinator
-Location: Budapest
+Search_bar: Remote
+Location: Hungary
 --------------------
 #Date posted#
 	Any_Time: 
-	Past_Month: X
+	Past_Month: 
 	Past_Week: 
-	Past_24_hours:
+	Past_24_hours: X
 --------------------
 #Experience Level#
 	Entry_level: X
-	Associate: 
-	Mid-Senior_level: 
+	Associate: X
+	Mid-Senior_level: X
 	Internship: X
-	Director: 
-	Executive: 
+	Director: X
+	Executive: X
 --------------------
 #Job Type#
-	Full-time: 
-	Contract: 
-	Part-time: 
+	Full-time: X
+	Contract: X
+	Part-time: X
 	Internship: X
-	Temporary: 
-	Other: 
+	Temporary: X
+	Other: X
 	Volunteer: X
 --------------------
 Remote (Y/N): Y
