@@ -27,9 +27,6 @@ Location: Hungary
 --------------------
 Remote (Y/N): Y
 Easy_Apply (Y/N): Y
-Under_10_Applicants (Y/N): N
 --------------------
-Company: tesla, youth business group
-Industry: banking, investment banking
-Job_Function: human resources, other
+Company: Intland Software
 --------------------

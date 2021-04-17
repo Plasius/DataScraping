@@ -44,10 +44,7 @@ def read_txt() -> Param:
 	job_type_start,job_type_end = 19, 26
 	remote_line = 27
 	easy_apply_line = 28
-	under_ten_applicants_line = 29
-	company_line = 31
-	industry_line = 32
-	job_function_line = 33
+	company_line = 30
 
 	#txt beolvasása
 	input_file=open('szures.txt', encoding="utf8")
@@ -67,15 +64,12 @@ def read_txt() -> Param:
 	#true or false
 	is_remote = True if input[remote_line][-1]=='Y' else False
 	is_easy_apply = True if input[easy_apply_line][-1]=='Y' else False   
-	is_under_ten = True if input[under_ten_applicants_line][-1]=='Y' else False
 
 	#listak
 	companies_list = ' '.join(input[company_line][1:]).split(', ')
-	industries_list = ' '.join(input[industry_line][1:]).split(', ')
-	job_functions_list = ' '.join(input[job_function_line][1:]).split(', ')
 
 	#print
-	param = Param.Param(keywords, location, date, experience_levels_list, job_types_list, is_remote, is_easy_apply, is_under_ten, companies_list, industries_list, job_functions_list)
+	param = Param.Param(keywords, location, date, experience_levels_list, job_types_list, is_remote, is_easy_apply, companies_list)
 	print(param)
 	return param
 
@@ -99,7 +93,7 @@ def login(driver):
 		#felhasznaloi adatok bevitele
 		username=driver.find_element_by_name("session_key")
 		WebDriverWait(driver, 5).until(EC.visibility_of(username))
-		username.send_keys("hadeg56830@ddwfzp.com")
+		username.send_keys("fegak36356@zcai55.com")
 
 		password=driver.find_element_by_name("session_password")
 		WebDriverWait(driver, 5).until(EC.visibility_of(password))
@@ -265,6 +259,29 @@ def filter_results(driver, param):
 		
 		webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
 		sleep(2)
+
+
+	#Open the dropdown of the filter, type in companies with downarrow and enter, then hit esc - Company
+	if param.companies_list:
+		company = driver.find_element_by_xpath("//button[text()='Company']")
+		company.click()
+		sleep(2)
+
+		for companyname in param.companies_list:
+			company_bar = driver.find_element_by_css_selector("[aria-label='Add a company']")
+			company_bar.send_keys(companyname)
+			sleep(2)
+
+			webdriver.ActionChains(driver).send_keys(Keys.ARROW_DOWN).perform()
+			sleep(1)
+			webdriver.ActionChains(driver).send_keys(Keys.ENTER).perform()
+			sleep(2)
+		
+		webdriver.ActionChains(driver).send_keys(Keys.TAB).perform()
+		sleep(1)
+		webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+		sleep(1)
+			
 		
 	#Open the dropdown of the filter, choose filter and hit esc - Job Type
 	if param.job_types_list:
