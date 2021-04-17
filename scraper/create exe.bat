@@ -1,0 +1,1 @@
+pyinstaller scraper.py -F

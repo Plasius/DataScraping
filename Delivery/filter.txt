@@ -1,0 +1,34 @@
+--------------------
+Search_bar: 
+Location: 
+--------------------
+#Date posted#
+	Any_Time: 
+	Past_Month: 
+	Past_Week: 
+	Past_24_hours: X
+--------------------
+#Experience Level#
+	Entry_level: X
+	Associate: 
+	Mid-Senior_level: 
+	Internship: X
+	Director: 
+	Executive: 
+--------------------
+Company: 
+--------------------
+#Job Type#
+	Full-time: 
+	Contract: 
+	Part-time: X
+	Internship: X
+	Temporary: 
+	Other: 
+	Volunteer: 
+--------------------
+Remote (Y/N): N
+Easy_Apply (Y/N): N
+--------------------
+Email: jogobo8811@vreagles.com
+Password: azsxdcfv
