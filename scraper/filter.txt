@@ -1,34 +1,34 @@
 --------------------
 Search_bar: 
-Location: 
+Location: Budapest
 --------------------
 #Date posted#
-	Any_Time: 
+	Any_Time: X
 	Past_Month: 
 	Past_Week: 
-	Past_24_hours: X
+	Past_24_hours: 
 --------------------
 #Experience Level#
 	Entry_level: X
-	Associate: 
-	Mid-Senior_level: 
+	Associate: X
+	Mid-Senior_level: X
 	Internship: X
-	Director: 
-	Executive: 
+	Director: X
+	Executive: X
 --------------------
-Company: Tesla, Vodafone
+Company: Vodafone, Tesla
 --------------------
 #Job Type#
-	Full-time: 
-	Contract: 
+	Full-time: X
+	Contract: X
 	Part-time: X
 	Internship: X
-	Temporary: 
-	Other: 
-	Volunteer: 
+	Temporary: X
+	Other: X
+	Volunteer: X
 --------------------
-Remote (Y/N): N
-Easy_Apply (Y/N): N
+Remote (Y/N): Y
+Easy_Apply (Y/N): Y
 --------------------
 Email: jogobo8811@vreagles.com
 Password: azsxdcfv
