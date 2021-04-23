@@ -1,6 +1,6 @@
 --------------------
 Search_bar: 
-Location: 
+Location: Hungary
 --------------------
 #Date posted#
 	Any_Time: 
@@ -12,11 +12,11 @@ Location:
 	Entry_level: X
 	Associate: 
 	Mid-Senior_level: 
-	Internship: X
+	Internship: X 
 	Director: 
 	Executive: 
 --------------------
-Company: 
+Company: Vega Partners
 --------------------
 #Job Type#
 	Full-time: 
@@ -27,8 +27,8 @@ Company:
 	Other: 
 	Volunteer: 
 --------------------
-Remote (Y/N): N
-Easy_Apply (Y/N): N
+Remote (Y/N): Y
+Easy_Apply (Y/N): Y
 --------------------
-Email: jogobo8811@vreagles.com
+Email: jedav99774@gridmire.com
 Password: azsxdcfv

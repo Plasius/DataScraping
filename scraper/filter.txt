@@ -1,5 +1,5 @@
 --------------------
-Search_bar: 
+Search_bar: sales coordinator
 Location: Budapest
 --------------------
 #Date posted#
@@ -10,25 +10,25 @@ Location: Budapest
 --------------------
 #Experience Level#
 	Entry_level: X
-	Associate: X
-	Mid-Senior_level: X
+	Associate: 
+	Mid-Senior_level: 
 	Internship: X
-	Director: X
-	Executive: X
+	Director: 
+	Executive: 
 --------------------
 Company: Vodafone, Tesla
 --------------------
 #Job Type#
-	Full-time: X
-	Contract: X
+	Full-time: 
+	Contract: 
 	Part-time: X
 	Internship: X
-	Temporary: X
-	Other: X
-	Volunteer: X
+	Temporary: 
+	Other: 
+	Volunteer: 
 --------------------
 Remote (Y/N): Y
-Easy_Apply (Y/N): Y
+Easy_Apply (Y/N): N
 --------------------
 Email: jogobo8811@vreagles.com
 Password: azsxdcfv
