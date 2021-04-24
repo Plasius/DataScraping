@@ -62,7 +62,6 @@ def read_txt() -> Parameters:
 
 	#return Parameters object with imported filters
 	param = Parameters.Parameters(keywords, location, date, experience_levels_list, job_types_list, is_remote, is_easy_apply, companies_list, email, password)
-	print(param)
 	return param
 
 #login and navigate to /jobs/search
@@ -298,13 +297,16 @@ def navigate(driver, page):
 
 	while True:
 		try:
-			for i in range(25):
-				job = driver.find_element_by_class_name('jobs-search-two-pane__job-card-container--viewport-tracking-'+str(i))
-				job.click()
-				sleep(2)
+			try:
+				for i in range(0, 25):
+					job = driver.find_element_by_class_name('jobs-search-two-pane__job-card-container--viewport-tracking-'+str(i))
+					job.click()
+					sleep(2)
 
-				munkak.append(extract(driver))
-				print(munkak[-1])
+					munkak.append(extract(driver))
+					print(munkak[-1])
+			except:
+				print('Nincs 25 állásajánlat az oldalon.')
 			
 
 			#next page
@@ -343,6 +345,7 @@ def export(lista):
 	file.close()
 
 
+
 # read job filters
 param = read_txt()
 
@@ -352,9 +355,10 @@ driver = init_driver()
 # login
 login(driver, param)
 
+
 # filter jobs
-#filter_results(driver, param)
-input('enter amikor ready')
+filter_results(driver, param)
+
 #get jobs from the page
 munkak = navigate(driver, 1)
 

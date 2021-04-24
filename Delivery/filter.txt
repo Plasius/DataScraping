@@ -9,14 +9,14 @@ Location: Hungary
 	Past_24_hours: 
 --------------------
 #Experience Level#
-	Entry_level: 
+	Entry_level: X
 	Associate: 
-	Mid-Senior_level: 
+	Mid-Senior_level: X
 	Internship: 
 	Director: 
 	Executive: 
 --------------------
-Company: 
+Company: Tesla
 --------------------
 #Job Type#
 	Full-time: 
@@ -27,8 +27,8 @@ Company:
 	Other: 
 	Volunteer: 
 --------------------
-Remote (Y/N): N
-Easy_Apply (Y/N): N
+Remote (Y/N): Y
+Easy_Apply (Y/N): Y
 --------------------
 Email: jikavip200@laraskey.com
 Password: azsxdcfv

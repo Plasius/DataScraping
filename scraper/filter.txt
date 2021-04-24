@@ -11,7 +11,7 @@ Location: Hungary
 #Experience Level#
 	Entry_level: X
 	Associate: 
-	Mid-Senior_level: 
+	Mid-Senior_level: X
 	Internship: 
 	Director: 
 	Executive: 
@@ -21,7 +21,7 @@ Company:
 #Job Type#
 	Full-time: 
 	Contract: 
-	Part-time: 
+	Part-time: X
 	Internship: 
 	Temporary: 
 	Other: 
