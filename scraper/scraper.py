@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 #Python import
 from time import sleep
 from datetime import datetime
@@ -47,7 +48,7 @@ def read_txt() -> Parameters:
 
 	#multiple-choice values
 	experience_levels_list = [level[0].strip(level[0][-1]).replace('_',' ') for level in input[experience_level_start:experience_level_end] if len(level) > 1]
-	job_types_list = [type[0].strip(type[0][-1]) for type in input[job_type_start:job_type_end] if len(type)>1]
+	job_types_list = [job_type[0].strip(job_type[0][-1]) for job_type in input[job_type_start:job_type_end] if len(job_type)>1]
 
 	#true or false values
 	is_remote = True if input[remote_line][-1]=='Y' else False
@@ -61,6 +62,7 @@ def read_txt() -> Parameters:
 
 	#return Parameters object with imported filters
 	param = Parameters.Parameters(keywords, location, date, experience_levels_list, job_types_list, is_remote, is_easy_apply, companies_list, email, password)
+	print(param)
 	return param
 
 #login and navigate to /jobs/search
@@ -125,20 +127,18 @@ def filter_results(driver, param):
 
 	#Open the dropdown of the filter, choose filter and hit esc - Date Posted
 	if param.date:
-		try:
-			driver.find_element_by_xpath("//button[text()='Date Posted']").click()
-			sleep(2)
-		
-			input_el_date_posted = driver.find_element_by_xpath("//span[text()=\'"+param.date[0]+"\']")
-			input_el_date_posted = input_el_date_posted.find_element_by_xpath('..')
-			input_el_date_posted = input_el_date_posted.find_element_by_xpath('..')
-			input_el_date_posted.click()
-			sleep(2)
+		#try:
+		driver.find_element_by_xpath("//button[text()='Date Posted']").click()
+		sleep(2)
 
-			webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
-			sleep(2)
-		except:
-			print('Nem sikerült dátum mezőt kiválasztani')
+		label_el_date_posted = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//span[text()=\'"+param.date[0]+"\']/../..")))
+		label_el_date_posted.click()
+		sleep(2)
+
+		webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+		sleep(2)
+		#except:
+		#	print('Nem sikerült dátum mezőt kiválasztani')
 
 	#Open the dropdown of the filter, choose filter and hit esc - Experience Level
 	if param.experience_levels_list:
@@ -292,46 +292,29 @@ def extract(driver) -> LinkedinJob:
 	return munka
 
 #navigate through the filtered jobs and pages, while clicking on every job listing
-def navigate(driver):
+def navigate(driver, page):
+	page = 1
 	munkak = []
 
-	i=0
-	o=0
-	h=1
-	kesz=[]
-	while o==0:
+	while True:
 		try:
-			#végigmegy az állásajánlatokon
-			h+=1
-			while i==0:
-				sleep(1)
-				jobs = driver.find_elements_by_xpath("//div[@class='mr1 artdeco-entity-lockup__image artdeco-entity-lockup__image--type-square ember-view']")
-				jobs = [x for x in jobs if x not in kesz]
-				if jobs==[]:
-					i=1
-				else:
-					for job in jobs:
-						job.click()
-						kesz.append(job)
+			for i in range(25):
+				job = driver.find_element_by_class_name('jobs-search-two-pane__job-card-container--viewport-tracking-'+str(i))
+				job.click()
+				sleep(2)
 
-						#start extract
-						munkak.append(extract(driver))
-						print(munkak[-1])
-						#end extract
-						
-						sleep(2)
+				munkak.append(extract(driver))
+				print(munkak[-1])
+			
 
-			#átlép a következő oldalra
-			sleep(1)
-			oldalak=driver.find_element_by_xpath("//button[@aria-label='Page {0}']".format(h))
-			sleep(2)
-			oldalak.click()
-			i=0
-			kesz=[]
+			#next page
+			page = page+1
+			btn = driver.find_element_by_css_selector("li[data-test-pagination-page-btn='{0}']".format(page))
+			btn.click()
+			sleep(5)
+
 		except:
-			o=1
-
-	sleep(2)
+			break
 
 	return munkak
 
@@ -370,10 +353,10 @@ driver = init_driver()
 login(driver, param)
 
 # filter jobs
-filter_results(driver, param)
-
+#filter_results(driver, param)
+input('enter amikor ready')
 #get jobs from the page
-munkak = navigate(driver)
+munkak = navigate(driver, 1)
 
 #export jobs
 export(munkak)

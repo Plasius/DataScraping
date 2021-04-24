@@ -5,30 +5,30 @@ Location: Hungary
 #Date posted#
 	Any_Time: 
 	Past_Month: 
-	Past_Week: 
-	Past_24_hours: X
+	Past_Week: X
+	Past_24_hours: 
 --------------------
 #Experience Level#
-	Entry_level: X
+	Entry_level: 
 	Associate: 
 	Mid-Senior_level: 
-	Internship: X 
+	Internship: 
 	Director: 
 	Executive: 
 --------------------
-Company: Vega Partners
+Company: 
 --------------------
 #Job Type#
 	Full-time: 
 	Contract: 
 	Part-time: X
-	Internship: X
+	Internship: 
 	Temporary: 
 	Other: 
 	Volunteer: 
 --------------------
-Remote (Y/N): Y
-Easy_Apply (Y/N): Y
+Remote (Y/N): N
+Easy_Apply (Y/N): N
 --------------------
-Email: jedav99774@gridmire.com
+Email: jikavip200@laraskey.com
 Password: azsxdcfv
