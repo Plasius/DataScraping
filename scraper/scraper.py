@@ -295,10 +295,12 @@ def navigate(driver, page):
 	page = 1
 	munkak = []
 
+	#navigate until an error occurs
 	while True:
 		try:
 			try:
-				for i in range(0, 25):
+				#loop through jobs
+				for i in range(0, 100):
 					job = driver.find_element_by_class_name('jobs-search-two-pane__job-card-container--viewport-tracking-'+str(i))
 					job.click()
 					sleep(2)
@@ -306,16 +308,17 @@ def navigate(driver, page):
 					munkak.append(extract(driver))
 					print(munkak[-1])
 			except:
-				print('Nincs 25 állásajánlat az oldalon.')
+				print('Nincs több állás az oldalon')
 			
 
-			#next page
-			page = page+1
+			#attempt clicking on the next page
+			page = page + 1
 			btn = driver.find_element_by_css_selector("li[data-test-pagination-page-btn='{0}']".format(page))
 			btn.click()
 			sleep(5)
 
 		except:
+			print('Nincs több oldal')
 			break
 
 	return munkak

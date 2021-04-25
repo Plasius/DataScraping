@@ -30,5 +30,5 @@ Company:
 Remote (Y/N): N
 Easy_Apply (Y/N): N
 --------------------
-Email: sokiba3856@iludir.com
+Email: wiyowe9125@sumwan.com
 Password: azsxdcfv

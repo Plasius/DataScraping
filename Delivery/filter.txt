@@ -16,7 +16,7 @@ Location: Hungary
 	Director: 
 	Executive: 
 --------------------
-Company: Tesla
+Company: 
 --------------------
 #Job Type#
 	Full-time: 
@@ -27,8 +27,8 @@ Company: Tesla
 	Other: 
 	Volunteer: 
 --------------------
-Remote (Y/N): Y
-Easy_Apply (Y/N): Y
+Remote (Y/N): N
+Easy_Apply (Y/N): N
 --------------------
-Email: jikavip200@laraskey.com
+Email: wiyowe9125@sumwan.com
 Password: azsxdcfv
