@@ -1,28 +1,28 @@
 --------------------
 Search_bar: 
-Location: Hungary
+Location: Budapest, Hungary
 --------------------
 #Date posted#
 	Any_Time: 
-	Past_Month: 
+	Past_Month:
 	Past_Week: X
 	Past_24_hours: 
 --------------------
 #Experience Level#
-	Entry_level: X
-	Associate: 
-	Mid-Senior_level: X
-	Internship: 
+	Entry_level:
+	Associate:
+	Mid-Senior_level: 
+	Internship:
 	Director: 
 	Executive: 
 --------------------
-Company: 
+Company:
 --------------------
 #Job Type#
 	Full-time: 
 	Contract: 
-	Part-time: X
-	Internship: 
+	Part-time:
+	Internship:
 	Temporary: 
 	Other: 
 	Volunteer: 
@@ -30,5 +30,5 @@ Company:
 Remote (Y/N): N
 Easy_Apply (Y/N): N
 --------------------
-Email: wiyowe9125@sumwan.com
+Email: rodoboj802@isecv.com
 Password: azsxdcfv

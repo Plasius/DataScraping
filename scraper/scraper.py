@@ -300,11 +300,19 @@ def navigate(driver, page):
 		try:
 			try:
 				#loop through jobs
-				for i in range(0, 100):
+				for i in range(0, 25):
 					job = driver.find_element_by_class_name('jobs-search-two-pane__job-card-container--viewport-tracking-'+str(i))
 					job.click()
 					sleep(2)
 
+					print(driver.current_url)
+					if '/company/' in str(driver.current_url):
+						driver.execute_script("window.history.go(-1)")
+						sleep(2)
+						i=-1
+						continue
+					#visszalepeskor nem menti le a hibas allasajanlat adatait
+					#a kovetkezo oldal lehet pontokkal van feltuntetve
 					munkak.append(extract(driver))
 					print(munkak[-1])
 			except:
@@ -313,8 +321,12 @@ def navigate(driver, page):
 
 			#attempt clicking on the next page
 			page = page + 1
-			btn = driver.find_element_by_css_selector("li[data-test-pagination-page-btn='{0}']".format(page))
-			btn.click()
+			#btn = driver.find_element_by_css_selector("li[data-test-pagination-page-btn='{0}']".format(page))
+			#btn.click()
+			#sleep(5)
+
+			pagebtn = driver.find_elements_by_css_selector("[aria-label='Page {0}']".format(page))[0]##.find_elements_by_tag_name("button")[0]
+			pagebtn.click()
 			sleep(5)
 
 		except:
@@ -369,4 +381,3 @@ munkak = navigate(driver, 1)
 export(munkak)
 
 #close browser to signal the end of the program
-driver.quit()
