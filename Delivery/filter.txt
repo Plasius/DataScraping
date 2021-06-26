@@ -30,5 +30,5 @@ Company:
 Remote (Y/N): N
 Easy_Apply (Y/N): N
 --------------------
-Email: rodoboj802@isecv.com
+Email: kimod27705@slowimo.com
 Password: azsxdcfv
