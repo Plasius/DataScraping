@@ -106,7 +106,7 @@ def filter_results(driver, param):
 	#type-in elements
 	if param.keywords:
 		try:
-			search_bar = driver.find_element(By.CSS_SELECTOR, '[aria-label="Search job titles or companies"]')
+			search_bar = driver.find_element(By.CSS_SELECTOR, "[aria-label='Search by title, skill, or company']")#[0].find_elements(By.TAG_NAME, "input")[0]
 			search_bar.send_keys(str(param.keywords))
 			sleep(2)
 		except:
@@ -114,7 +114,7 @@ def filter_results(driver, param):
 
 	if param.location:
 		try:
-			location_bar = driver.find_element(By.CSS_SELECTOR, "[aria-label='Location']")
+			location_bar = driver.find_element(By.CSS_SELECTOR, "[aria-label='City, state, or zip code']")#[0].find_elements(By.TAG_NAME, "input")[0]
 			location_bar.send_keys(Keys.CONTROL, 'a')
 			location_bar.send_keys(Keys.BACKSPACE)
 			location_bar.send_keys(str(param.location))
@@ -126,27 +126,15 @@ def filter_results(driver, param):
 
 	#Open the dropdown of the filter, choose filter and hit esc - Date Posted
 	if param.date:
-    	
 		try:
-			#az előző XPATH módszer nem működött, nem találtam egyszerűbbet
-			if str(param.date[0]) == "Past 24 hours":
-				datePath = '//*[@id="jserp-filters"]/ul/li[1]/div/div/div/fieldset/div/div[1]/label'
-			elif str(param.date[0]) == "Past Week":
-				datePath = '//*[@id="jserp-filters"]/ul/li[1]/div/div/div/fieldset/div/div[2]/label'
-			elif str(param.date[0]) == "Past Month":
-					datePath = '//*[@id="jserp-filters"]/ul/li[1]/div/div/div/fieldset/div/div[3]/label'
-			elif str(param.date[0]) == "Any Time":
-					datePath = '//*[@id="jserp-filters"]/ul/li[1]/div/div/div/fieldset/div/div[4]/label'
-
-			driver.find_element(By.XPATH, '//*[@id="jserp-filters"]/ul/li[1]/div/div/button').click()
+			driver.find_element(By.XPATH, "//button[text()='Date Posted']").click()
 			sleep(2)
 
-			label_el_date_posted = driver.find_element(By.XPATH, datePath)
+			label_el_date_posted = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//span[text()=\'"+param.date[0]+"\']/../..")))
 			label_el_date_posted.click()
 			sleep(2)
-			
 
-			webdriver.ActionChains(driver).send_keys(Keys.ENTER).perform()
+			webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
 			sleep(2)
 		except:
 			print('Nem sikerült dátum mezőt kiválasztani')
@@ -387,9 +375,9 @@ login(driver, param)
 filter_results(driver, param)
 
 #get jobs from the page
-munkak = navigate(driver, 1)
+# munkak = navigate(driver, 1)
 
-#export jobs
-export(munkak)
+# #export jobs
+# export(munkak)
 
 #close browser to signal the end of the program
