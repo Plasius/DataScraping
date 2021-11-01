@@ -126,18 +126,31 @@ def filter_results(driver, param):
 
 	#Open the dropdown of the filter, choose filter and hit esc - Date Posted
 	if param.date:
-		#try:
-		driver.find_element(By.XPATH, "//button[text()='Date Posted']").click()
-		sleep(2)
+    	
+		try:
+			#az előző XPATH módszer nem működött, nem találtam egyszerűbbet
+			if str(param.date[0]) == "Past 24 hours":
+				datePath = '//*[@id="jserp-filters"]/ul/li[1]/div/div/div/fieldset/div/div[1]/label'
+			elif str(param.date[0]) == "Past Week":
+				datePath = '//*[@id="jserp-filters"]/ul/li[1]/div/div/div/fieldset/div/div[2]/label'
+			elif str(param.date[0]) == "Past Month":
+					datePath = '//*[@id="jserp-filters"]/ul/li[1]/div/div/div/fieldset/div/div[3]/label'
+			elif str(param.date[0]) == "Any Time":
+					datePath = '//*[@id="jserp-filters"]/ul/li[1]/div/div/div/fieldset/div/div[4]/label'
+			print(str(param.date[0]))
 
-		label_el_date_posted = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//span[text()=\'"+param.date[0]+"\']/../..")))
-		label_el_date_posted.click()
-		sleep(2)
+			driver.find_element(By.XPATH, '//*[@id="jserp-filters"]/ul/li[1]/div/div/button').click()
+			sleep(2)
 
-		webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
-		sleep(2)
-		#except:
-		#	print('Nem sikerült dátum mezőt kiválasztani')
+			label_el_date_posted = driver.find_element(By.XPATH, datePath)
+			label_el_date_posted.click()
+			sleep(2)
+			
+
+			webdriver.ActionChains(driver).send_keys(Keys.ENTER).perform()
+			sleep(2)
+		except:
+			print('Nem sikerült dátum mezőt kiválasztani')
 
 	#Open the dropdown of the filter, choose filter and hit esc - Experience Level
 	if param.experience_levels_list:

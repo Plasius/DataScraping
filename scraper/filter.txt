@@ -4,7 +4,7 @@ Location: Budapest, Hungary
 --------------------
 #Date posted#
 	Any_Time: 
-	Past_Month:
+	Past_Month: 
 	Past_Week: X
 	Past_24_hours: 
 --------------------
