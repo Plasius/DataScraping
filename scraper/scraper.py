@@ -375,9 +375,9 @@ login(driver, param)
 filter_results(driver, param)
 
 #get jobs from the page
-# munkak = navigate(driver, 1)
+munkak = navigate(driver, 1)
 
-# #export jobs
-# export(munkak)
+#export jobs
+export(munkak)
 
 #close browser to signal the end of the program
