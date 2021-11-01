@@ -67,16 +67,16 @@ def read_txt() -> Parameters:
 #login and navigate to /jobs/search
 def login(driver, param):
 	#chrome megnyitasa
-	driver.get("https://www.linkedin.com/")
+	driver.get("https://www.linkedin.com/login?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin")
 	driver.maximize_window()
 
 	try:
 		#type in credentials
-		username=driver.find_element_by_name("session_key")
+		username=driver.find_element(By.NAME, "session_key")
 		WebDriverWait(driver, 5).until(EC.visibility_of(username))
 		username.send_keys(param.email)
 
-		password=driver.find_element_by_name("session_password")
+		password=driver.find_element(By.NAME, "session_password")
 		WebDriverWait(driver, 5).until(EC.visibility_of(password))
 		password.send_keys(param.password)
 		
@@ -106,7 +106,7 @@ def filter_results(driver, param):
 	#type-in elements
 	if param.keywords:
 		try:
-			search_bar = driver.find_elements_by_css_selector("[aria-label='Search by title, skill, or company']")[0].find_elements_by_tag_name("input")[0]
+			search_bar = driver.find_elements_by_css_selector("[aria-label='Search by title, skill, or company']")[0].find_elements(By.TAG_NAME, "input")[0]
 			search_bar.send_keys(str(param.keywords))
 			sleep(2)
 		except:
@@ -114,7 +114,7 @@ def filter_results(driver, param):
 
 	if param.location:
 		try:
-			location_bar = driver.find_elements_by_css_selector("[aria-label='City, state, or zip code']")[0].find_elements_by_tag_name("input")[0]
+			location_bar = driver.find_elements(By.CSS_SELECTOR, "[aria-label='City, state, or zip code']")[0].find_elements(By.TAG_NAME, "input")[0]
 			location_bar.send_keys(Keys.CONTROL, 'a')
 			location_bar.send_keys(Keys.BACKSPACE)
 			location_bar.send_keys(str(param.location))
@@ -127,7 +127,7 @@ def filter_results(driver, param):
 	#Open the dropdown of the filter, choose filter and hit esc - Date Posted
 	if param.date:
 		#try:
-		driver.find_element_by_xpath("//button[text()='Date Posted']").click()
+		driver.find_element(By.XPATH, "//button[text()='Date Posted']").click()
 		sleep(2)
 
 		label_el_date_posted = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//span[text()=\'"+param.date[0]+"\']/../..")))
@@ -142,15 +142,15 @@ def filter_results(driver, param):
 	#Open the dropdown of the filter, choose filter and hit esc - Experience Level
 	if param.experience_levels_list:
 		try:
-			experience_level = driver.find_element_by_xpath("//button[text()='Experience Level']")
+			experience_level = driver.find_element(By.XPATH, "//button[text()='Experience Level']")
 			experience_level.click()
 			sleep(2)
 
 			for level in param.experience_levels_list:
 				try:
-					input_el_experience_level = driver.find_element_by_xpath("//span[text()=\'"+level+"\']")
-					input_el_experience_level = input_el_experience_level.find_element_by_xpath('..')
-					input_el_experience_level = input_el_experience_level.find_element_by_xpath('..')
+					input_el_experience_level = driver.find_element(By.XPATH, "//span[text()=\'"+level+"\']")
+					input_el_experience_level = input_el_experience_level.find_element(By.XPATH, '..')
+					input_el_experience_level = input_el_experience_level.find_element(By.XPATH, '..')
 					input_el_experience_level.click()
 				except:
 					print('Hiba történt az egyik Experience level kiválasztásakor: '+ level)
@@ -166,13 +166,13 @@ def filter_results(driver, param):
 	#Open the dropdown of the filter, type in companies with downarrow and enter, then hit esc - Company
 	if param.companies_list:
 		try:
-			company = driver.find_element_by_xpath("//button[text()='Company']")
+			company = driver.find_element(By.XPATH, "//button[text()='Company']")
 			company.click()
 			sleep(2)
 
 			for company_name in param.companies_list:
 				try:
-					company_bar = driver.find_element_by_css_selector("[aria-label='Add a company']")
+					company_bar = driver.find_element(By.CSS_SELECTOR, "[aria-label='Add a company']")
 					company_bar.send_keys(company_name)
 					sleep(2)
 					webdriver.ActionChains(driver).send_keys(Keys.ARROW_DOWN).perform()
@@ -193,13 +193,13 @@ def filter_results(driver, param):
 	#Open the dropdown of the filter, choose filter and hit esc - Job Type
 	if param.job_types_list:
 		try:
-			job_type = driver.find_element_by_xpath("//button[text()='Job Type']")
+			job_type = driver.find_element(By.XPATH, "//button[text()='Job Type']")
 			job_type.click()
 			sleep(2)
 
 			for pos in param.job_types_list:
 				try:
-					input_el_job_type = driver.find_element_by_xpath("//label[@for=\'"+"jobType-"+pos[0]+"\']")
+					input_el_job_type = driver.find_element(By.XPATH, "//label[@for=\'"+"jobType-"+pos[0]+"\']")
 					input_el_job_type.click()
 				except:
 					print('Hiba történt egy Job Type kiválasztásakor: ' + pos)
@@ -213,7 +213,7 @@ def filter_results(driver, param):
 	#Push button if filter is true for remote
 	if param.is_remote == True:
 		try:
-			remote = driver.find_element_by_xpath("//button[text()='Remote']")
+			remote = driver.find_element(By.XPATH, "//button[text()='Remote']")
 			remote.click()
 			sleep(2)
 		except:
@@ -222,7 +222,7 @@ def filter_results(driver, param):
 	#Push button if filter is true for easy apply
 	if param.is_easy_apply == True:
 		try:
-			easy_apply = driver.find_element_by_xpath("//button[text()='Easy Apply']")
+			easy_apply = driver.find_element(By.XPATH, "//button[text()='Easy Apply']")
 			easy_apply.click()
 			sleep(2)  
 		except:
@@ -235,23 +235,23 @@ def extract(driver) -> LinkedinJob:
 
 	#extract title
 	try:
-		title = driver.find_elements_by_class_name("jobs-details-top-card__job-title")
+		title = driver.find_elements(By.CLASS_NAME, "jobs-details-top-card__job-title")
 		munka.title = title[0].text
 	except:
 		print('Nem sikerült az állás nevét kimenteni')
 
 	#case 1: company name is a link
 	try:
-		company = driver.find_elements_by_class_name("jobs-details-top-card__company-url")
+		company = driver.find_elements(By.CLASS_NAME, "jobs-details-top-card__company-url")
 		munka.company = company[0].text
 
-		location = driver.find_elements_by_class_name("jobs-details-top-card__bullet")
+		location = driver.find_elements(By.CLASS_NAME, "jobs-details-top-card__bullet")
 		munka.location = location[0].text
 	except:
 		#case 2: company name is not a link
 		try:
-			data = driver.find_element_by_class_name('jobs-details-top-card__company-info')
-			children = data.find_elements_by_xpath(".//*")
+			data = driver.find_element(By.CLASS_NAME, 'jobs-details-top-card__company-info')
+			children = data.find_elements(By.XPATH, ".//*")
 
 			#get unlinked company name
 			if children[0].text == 'Company Name':
@@ -265,12 +265,12 @@ def extract(driver) -> LinkedinJob:
 
 	#lower group
 	try:
-		group = driver.find_elements_by_class_name('jobs-box__group')
+		group = driver.find_elements(By.CLASS_NAME, 'jobs-box__group')
 
 		#loop through name-value pairs
 		for element in group:
 			#get the children of each pair: name and value
-			children = element.find_elements_by_xpath(".//*")
+			children = element.find_elements(By.XPATH, ".//*")
 			titlr = children[0].text
 			descr = children[1]
 
@@ -280,10 +280,10 @@ def extract(driver) -> LinkedinJob:
 			elif titlr == 'Employment Type':
 				munka.employment_type = descr.text
 			elif titlr == 'Industry':
-				for item in descr.find_elements_by_xpath(".//*"):
+				for item in descr.find_elements(By.XPATH, ".//*"):
 					munka.industry_list.append(item.text)
 			elif titlr == 'Job Functions':
-				for item in descr.find_elements_by_xpath(".//*"):
+				for item in descr.find_elements(By.XPATH, ".//*"):
 					munka.job_functions_list.append(item.text)
 	except:
 		print('Nem sikerült a munkaleírás alsó táblázatából az adatokat kimenteni.')
@@ -301,7 +301,7 @@ def navigate(driver, page):
 			try:
 				#loop through jobs
 				for i in range(0, 25):
-					job = driver.find_element_by_class_name('jobs-search-two-pane__job-card-container--viewport-tracking-'+str(i))
+					job = driver.find_element(By.CLASS_NAME, 'jobs-search-two-pane__job-card-container--viewport-tracking-'+str(i))
 					job.click()
 					sleep(2)
 
@@ -321,11 +321,11 @@ def navigate(driver, page):
 
 			#attempt clicking on the next page
 			page = page + 1
-			#btn = driver.find_element_by_css_selector("li[data-test-pagination-page-btn='{0}']".format(page))
+			# btn = driver.find_element(By.CSS_SELECTOR, "li[data-test-pagination-page-btn='{0}']".format(page))
 			#btn.click()
 			#sleep(5)
 
-			pagebtn = driver.find_elements_by_css_selector("[aria-label='Page {0}']".format(page))[0]##.find_elements_by_tag_name("button")[0]
+			pagebtn = driver.find_elements(By.CSS_SELECTOR, "[aria-label='Page {0}']".format(page))[0]##.find_elements(By.TAG_NAME"button")[0]
 			pagebtn.click()
 			sleep(5)
 
