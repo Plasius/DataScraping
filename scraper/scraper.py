@@ -114,7 +114,7 @@ def filter_results(driver, param):
 
 	if param.location:
 		try:
-			location_bar = driver.find_elements(By.CSS_SELECTOR, "[aria-label='City, state, or zip code']")[0].find_elements(By.TAG_NAME, "input")[0]
+			location_bar = driver.find_element(By.CSS_SELECTOR, "[aria-label='Location']")
 			location_bar.send_keys(Keys.CONTROL, 'a')
 			location_bar.send_keys(Keys.BACKSPACE)
 			location_bar.send_keys(str(param.location))
