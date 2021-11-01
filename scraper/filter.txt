@@ -1,5 +1,5 @@
 --------------------
-Search_bar: 
+Search_bar: Morgan
 Location: Budapest, Hungary
 --------------------
 #Date posted#
@@ -30,5 +30,5 @@ Company:
 Remote (Y/N): N
 Easy_Apply (Y/N): N
 --------------------
-Email: kimod27705@slowimo.com
-Password: azsxdcfv
+Email: xarem12564@d3ff.com
+Password: asd1357h

@@ -106,7 +106,7 @@ def filter_results(driver, param):
 	#type-in elements
 	if param.keywords:
 		try:
-			search_bar = driver.find_elements_by_css_selector("[aria-label='Search by title, skill, or company']")[0].find_elements(By.TAG_NAME, "input")[0]
+			search_bar = driver.find_element(By.CSS_SELECTOR, '[aria-label="Search job titles or companies"]')
 			search_bar.send_keys(str(param.keywords))
 			sleep(2)
 		except:
