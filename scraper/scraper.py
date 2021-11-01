@@ -137,7 +137,6 @@ def filter_results(driver, param):
 					datePath = '//*[@id="jserp-filters"]/ul/li[1]/div/div/div/fieldset/div/div[3]/label'
 			elif str(param.date[0]) == "Any Time":
 					datePath = '//*[@id="jserp-filters"]/ul/li[1]/div/div/div/fieldset/div/div[4]/label'
-			print(str(param.date[0]))
 
 			driver.find_element(By.XPATH, '//*[@id="jserp-filters"]/ul/li[1]/div/div/button').click()
 			sleep(2)
