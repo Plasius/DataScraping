@@ -27,11 +27,11 @@ def read_txt() -> Parameters:
 	date_posted_start, date_posted_end = 5, 9
 	experience_level_start, experience_level_end = 11, 17
 	job_type_start, job_type_end = 21, 28
-	remote_line = 29
-	easy_apply_line = 30
+	remote_line_start, remote_line_end = 30, 33
+	easy_apply_line = 34
 	company_line = 18
-	email_line = 32
-	password_line = 33
+	email_line = 36
+	password_line = 37
 
 	#read txt
 	input_file = open('filter.txt', encoding="utf8")
@@ -49,9 +49,9 @@ def read_txt() -> Parameters:
 	#multiple-choice values
 	experience_levels_list = [level[0].strip(level[0][-1]).replace('_',' ') for level in input[experience_level_start:experience_level_end] if len(level) > 1]
 	job_types_list = [job_type[0].strip(job_type[0][-1]) for job_type in input[job_type_start:job_type_end] if len(job_type)>1]
+	remote_type_list = [remote_type[0].strip(remote_type[0][-1]) for remote_type in input[remote_line_start:remote_line_end] if len(remote_type)>1]
 
 	#true or false values
-	is_remote = True if input[remote_line][-1]=='Y' else False
 	is_easy_apply = True if input[easy_apply_line][-1]=='Y' else False   
 
 	#lists
@@ -61,7 +61,7 @@ def read_txt() -> Parameters:
 		companies_list = []
 
 	#return Parameters object with imported filters
-	param = Parameters.Parameters(keywords, location, date, experience_levels_list, job_types_list, is_remote, is_easy_apply, companies_list, email, password)
+	param = Parameters.Parameters(keywords, location, date, experience_levels_list, job_types_list, remote_type_list, is_easy_apply, companies_list, email, password)
 	return param
 
 #login and navigate to /jobs/search
@@ -165,29 +165,29 @@ def filter_results(driver, param):
 
 	#Open the dropdown of the filter, type in companies with downarrow and enter, then hit esc - Company
 	if param.companies_list:
-		try:
+		# try:
 			company = driver.find_element(By.XPATH, "//button[text()='Company']")
 			company.click()
 			sleep(2)
 
 			for company_name in param.companies_list:
-				try:
-					company_bar = driver.find_element(By.CSS_SELECTOR, "[aria-label='Add a company']")
-					company_bar.send_keys(company_name)
-					sleep(2)
-					webdriver.ActionChains(driver).send_keys(Keys.ARROW_DOWN).perform()
-					sleep(1)
-					webdriver.ActionChains(driver).send_keys(Keys.ENTER).perform()
-					sleep(2)
-				except:
-					print('Hiba történt egy Company kiválasztásakor: ' + company_name)
+				# try:
+				company_bar = driver.find_element(By.XPATH, '//div[1]/div/form/fieldset/div[1]/div/div/input')
+				company_bar.send_keys(company_name)
+				sleep(2)
+				webdriver.ActionChains(driver).send_keys(Keys.ARROW_DOWN).perform()
+				sleep(1)
+				webdriver.ActionChains(driver).send_keys(Keys.ENTER).perform()
+				sleep(2)
+				# except:
+				# 	print('Hiba történt egy Company kiválasztásakor: ' + company_name)
 			
 			webdriver.ActionChains(driver).send_keys(Keys.TAB).perform()
 			sleep(1)
 			webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
 			sleep(1)
-		except:
-			print('Nem sikerült a megfelelő Companyt/kat kiválasztani')
+		# except:
+		# 	print('Nem sikerült a megfelelő Companyt/kat kiválasztani')
 			
 		
 	#Open the dropdown of the filter, choose filter and hit esc - Job Type
@@ -211,13 +211,25 @@ def filter_results(driver, param):
 			print('Nem sikerült a megfelelő Job Typeot/kat kiválasztani')
 
 	#Push button if filter is true for remote
-	if param.is_remote == True:
+	if param.remote_types_list:
+    	
 		try:
-			remote = driver.find_element(By.XPATH, "//button[text()='Remote']")
-			remote.click()
+			remote_type = driver.find_element(By.XPATH, "//button[text()='On-site/Remote']")
+			remote_type.click()
+			sleep(2)
+
+			for i in range(len(param.remote_types_list)):
+				try:
+					input_el_remote_type = driver.find_element(By.XPATH, "//label[@for=\'"+"workplaceType-"+str(i+1)+"\']")
+					input_el_remote_type.click()
+				except:
+					print('Hiba történt egy Job Type kiválasztásakor: ' + pos)
+				sleep(1)
+				
+			webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
 			sleep(2)
 		except:
-			print('Nem sikerült a Remoteot kiválasztani')
+			print('Nem sikerült a megfelelő Workplace Typeot/kat kiválasztani')
 
 	#Push button if filter is true for easy apply
 	if param.is_easy_apply == True:

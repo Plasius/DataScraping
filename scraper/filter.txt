@@ -1,34 +1,38 @@
 --------------------
-Search_bar: Morgan
-Location: Budapest, Hungary
+Search_bar: Tool design engineer
+Location: Székesfehérvár, Hungary
 --------------------
 #Date posted#
 	Any_Time: 
 	Past_Month: 
-	Past_Week: X
-	Past_24_hours: 
+	Past_Week: 
+	Past_24_hours: X
 --------------------
-#Experience Level#
-	Entry_level:
-	Associate:
+#Eperience Level#
+	Entry_level: X
+	Associate: 
 	Mid-Senior_level: 
-	Internship:
+	Internship: 
 	Director: 
-	Executive: 
+	Eecutive: 
 --------------------
-Company:
+Company: IBM, Harman
 --------------------
 #Job Type#
-	Full-time: 
+	Full-time: X
 	Contract: 
-	Part-time:
-	Internship:
+	Part-time: 
+	Internship: 
 	Temporary: 
 	Other: 
 	Volunteer: 
 --------------------
-Remote (Y/N): N
-Easy_Apply (Y/N): N
+#Remote#
+	On-site: X
+	Remote: 
+	Hybrid: 
 --------------------
-Email: xarem12564@d3ff.com
+Easy_Apply (Y/N): Y
+--------------------
+Email: arem12564@d3ff.com
 Password: asd1357h
