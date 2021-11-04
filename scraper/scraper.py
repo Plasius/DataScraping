@@ -121,7 +121,10 @@ def filter_results(driver, param):
 		except:
 			print('Nem sikerült a location bar-ba írni')
 		
-	webdriver.ActionChains(driver).send_keys(Keys.ENTER).perform() #mintha nem ment, nem is akkora baj TODO
+	#webdriver.ActionChains(driver).send_keys(Keys.ENTER).perform() #mintha nem ment, nem is akkora baj TODO??
+
+	driver.find_element(By.CLASS_NAME, 'jobs-search-box__submit-button').click()
+
 	sleep(3)
 
 	#Open the dropdown of the filter, choose filter and hit esc - Date Posted
@@ -245,46 +248,35 @@ def extract(driver) -> LinkedinJob:
 	#create a job class
 	munka = LinkedinJob.LinkedinJob('','','','','','')
 
-	#extract title TODO
+	#extract title
 	try:
-		title = driver.find_elements(By.CLASS_NAME, "jobs-details-top-card__job-title")
-		munka.title = title[0].text
+		title = driver.find_element(By.CLASS_NAME, "t-24")
+		munka.title = title.text
 	except:
 		print('Nem sikerült az állás nevét kimenteni')
 
-	# company TODO
+	#case 1: company name is a link
 	try:
-		company = driver.find_elements(By.CLASS_NAME, "jobs-details-top-card__company-url")
-		munka.company = company[0].text
-
+		company = driver.find_element(By.CLASS_NAME, "jobs-unified-top-card__subtitle-primary-grouping")
+		munka.company = company.find_element(By.TAG_NAME, "a").text
 	except:
-		print('Nem sikerült az állásadó cég nevét és a helyszínt kimenteni: ' + str(munka))
+		#case 2: company name is not a link
+		try:
+			company = driver.find_element(By.CLASS_NAME, "jobs-unified-top-card__subtitle-primary-grouping")
+			munka.company = company.find_element(By.TAG_NAME, "span").text
+		except:
+			print('Nem sikerült az állásadó cég nevét kimenteni: ' + str(munka))
 
 
-	#extract location TODO
+	#extract location
 	try:
-		pass
+		location = driver.find_element(By.CLASS_NAME, "jobs-unified-top-card__bullet")
+		munka.location = location.text
 	except:
-		pass
+		print('Nem sikerült a helyszínt kimenteni: ' + str(munka))
 
-	#extract experience_level TODO
-	try:
-		pass
-	except:
-		pass
+	# MASIK HAROM IDE TODO
 
-	#extract job_type TODO
-	try:
-		pass
-	except:
-		pass
-
-	#extract industry TODO
-	try:
-		pass
-	except:
-		pass
-	
 	return munka
 
 #navigate through the filtered jobs and pages, while clicking on every job listing
@@ -302,7 +294,7 @@ def navigate(driver, page):
 					job.click()
 					sleep(2)
 
-					print(driver.current_url)
+					# print(driver.current_url)
 					if '/company/' in str(driver.current_url):
 						driver.execute_script("window.history.go(-1)")
 						sleep(2)

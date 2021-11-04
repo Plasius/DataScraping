@@ -6,20 +6,20 @@ Location: Székesfehérvár, Hungary
 	Any_Time: 
 	Past_Month: 
 	Past_Week: 
-	Past_24_hours: X
+	Past_24_hours: 
 --------------------
 #Eperience Level#
-	Entry_level: X
+	Entry_level: 
 	Associate: 
 	Mid-Senior_level: 
 	Internship: 
 	Director: 
 	Eecutive: 
 --------------------
-Company: IBM, Harman
+Company: 
 --------------------
 #Job Type#
-	Full-time: X
+	Full-time: 
 	Contract: 
 	Part-time: 
 	Internship: 
@@ -28,11 +28,11 @@ Company: IBM, Harman
 	Volunteer: 
 --------------------
 #Remote#
-	On-site: X
+	On-site: 
 	Remote: 
 	Hybrid: 
 --------------------
-Easy_Apply (Y/N): Y
+Easy_Apply (Y/N): 
 --------------------
 Email: komot21898@ecofreon.com
 Password: aysxdcfv
