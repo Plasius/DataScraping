@@ -275,29 +275,29 @@ def extract(driver) -> LinkedinJob:
 
 	#extract experience_level  ujrairni szepen TODO
 	try:
-		title = driver.find_element_by_xpath('//div[@class="jobs-unified-top-card__job-insight"]/span')
-		title = title.text.split(" ")
-		title = " ".join(title[2:])
-		munka.experience_level = title
+		experience_level = driver.find_element_by_xpath('//div[@class="jobs-unified-top-card__job-insight"]/span')
+		experience_level = experience_level.text.split(" ")
+		experience_level = " ".join(experience_level[2:])
+		munka.experience_level = experience_level
 	except:
 		print("nem találtam az experience_levelt")
 
 	#extract job_type TODO
 	try:
-		title = driver.find_element_by_xpath('//div[@class="jobs-unified-top-card__job-insight"]/span')
-		title = title.text.split(" ")[0]
-		munka.job_type = title
+		job_type = driver.find_element_by_xpath('//div[@class="jobs-unified-top-card__job-insight"]/span')
+		job_type = job_type.text.split(" ")[0]
+		munka.job_type = job_type
 	except:
 		print("nem találtam a job type-ot")
 
 	#extract industry TODO
 	try:
-		title = driver.find_element_by_xpath('//div[@class="jobs-unified-top-card__job-insight"][2]/span')
-		title = title.text
-		title = title.split(" ")[3:]
-		title = " ".join(title)
-		if "this job" not in title:
-			munka.industry = title
+		industry = driver.find_element_by_xpath('//div[@class="jobs-unified-top-card__job-insight"][2]/span')
+		industry = industry.text
+		industry = industry.split(" ")[3:]
+		industry = " ".join(industry)
+		if "this job" not in industry:
+			munka.industry = industry
 	except:
 		print("nem találtam az industryt")
 
