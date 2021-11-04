@@ -120,9 +120,7 @@ def filter_results(driver, param):
 			location_bar.send_keys(str(param.location))
 		except:
 			print('Nem sikerült a location bar-ba írni')
-		
-	#webdriver.ActionChains(driver).send_keys(Keys.ENTER).perform() #mintha nem ment, nem is akkora baj TODO??
-
+	
 	driver.find_element(By.CLASS_NAME, 'jobs-search-box__submit-button').click()
 
 	sleep(3)
@@ -275,7 +273,35 @@ def extract(driver) -> LinkedinJob:
 	except:
 		print('Nem sikerült a helyszínt kimenteni: ' + str(munka))
 
-	# MASIK HAROM IDE TODO
+	#extract experience_level  ujrairni szepen TODO
+	try:
+		title = driver.find_element_by_xpath('//div[@class="jobs-unified-top-card__job-insight"]/span')
+		title = title.text.split(" ")
+		title = " ".join(title[2:])
+		munka.experience_level = title
+	except:
+		print("nem találtam az experience_levelt")
+
+	#extract job_type TODO
+	try:
+		title = driver.find_element_by_xpath('//div[@class="jobs-unified-top-card__job-insight"]/span')
+		title = title.text.split(" ")[0]
+		munka.job_type = title
+	except:
+		print("nem találtam a job type-ot")
+
+	#extract industry TODO
+	try:
+		title = driver.find_element_by_xpath('//div[@class="jobs-unified-top-card__job-insight"][2]/span')
+		title = title.text
+		title = title.split(" ")[3:]
+		title = " ".join(title)
+		if "this job" not in title:
+			munka.industry = title
+	except:
+		print("nem találtam az industryt")
+
+
 
 	return munka
 
@@ -368,5 +394,3 @@ munkak = navigate(driver, 1)
 
 #export jobs
 export(munkak)
-
-#close browser to signal the end of the program

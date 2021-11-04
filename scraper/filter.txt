@@ -1,12 +1,12 @@
 --------------------
-Search_bar: Tool design engineer
-Location: Székesfehérvár, Hungary
+Search_bar: sales coordinator
+Location: Budapest
 --------------------
 #Date posted#
 	Any_Time: 
 	Past_Month: 
 	Past_Week: 
-	Past_24_hours: 
+	Past_24_hours: X
 --------------------
 #Eperience Level#
 	Entry_level: 
@@ -32,7 +32,7 @@ Company:
 	Remote: 
 	Hybrid: 
 --------------------
-Easy_Apply (Y/N): 
+Easy_Apply (Y/N): Y
 --------------------
 Email: komot21898@ecofreon.com
 Password: aysxdcfv
