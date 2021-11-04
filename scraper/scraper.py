@@ -243,7 +243,7 @@ def filter_results(driver, param):
 #get the details from the currently opened job page
 def extract(driver) -> LinkedinJob:
 	#create a job class
-	munka = LinkedinJob.LinkedinJob('','','','','',[],[])
+	munka = LinkedinJob.LinkedinJob('','','','','','')
 
 	#extract title
 	try:
