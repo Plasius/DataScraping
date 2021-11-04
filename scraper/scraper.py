@@ -16,7 +16,7 @@ import LinkedinJob
 #init and return a webdriver
 def init_driver() -> webdriver.Chrome:
 	options = webdriver.ChromeOptions() 
-	options.add_argument("user-data-dir=/scraperdata8")
+	options.add_argument("user-data-dir=/scraperdata8") # cache delete
 	return webdriver.Chrome(options=options)
 
 #read filter options from txt and return them through a Param object
@@ -121,7 +121,7 @@ def filter_results(driver, param):
 		except:
 			print('Nem sikerült a location bar-ba írni')
 		
-	webdriver.ActionChains(driver).send_keys(Keys.ENTER).perform()
+	webdriver.ActionChains(driver).send_keys(Keys.ENTER).perform() #mintha nem ment, nem is akkora baj TODO
 	sleep(3)
 
 	#Open the dropdown of the filter, choose filter and hit esc - Date Posted
@@ -243,62 +243,47 @@ def filter_results(driver, param):
 #get the details from the currently opened job page
 def extract(driver) -> LinkedinJob:
 	#create a job class
-	munka = LinkedinJob.LinkedinJob('','','','','',[],[])
+	munka = LinkedinJob.LinkedinJob('','','','','','')
 
-	#extract title
+	#extract title TODO
 	try:
 		title = driver.find_elements(By.CLASS_NAME, "jobs-details-top-card__job-title")
 		munka.title = title[0].text
 	except:
 		print('Nem sikerült az állás nevét kimenteni')
 
-	#case 1: company name is a link
+	# company TODO
 	try:
 		company = driver.find_elements(By.CLASS_NAME, "jobs-details-top-card__company-url")
 		munka.company = company[0].text
 
-		location = driver.find_elements(By.CLASS_NAME, "jobs-details-top-card__bullet")
-		munka.location = location[0].text
 	except:
-		#case 2: company name is not a link
-		try:
-			data = driver.find_element(By.CLASS_NAME, 'jobs-details-top-card__company-info')
-			children = data.find_elements(By.XPATH, ".//*")
+		print('Nem sikerült az állásadó cég nevét és a helyszínt kimenteni: ' + str(munka))
 
-			#get unlinked company name
-			if children[0].text == 'Company Name':
-				munka.company = data.text.splitlines()[1]
-			else:
-				munka.company = children[0].text
 
-			munka.location = children[2].text
-		except:
-			print('Nem sikerült az állásadó cég nevét és a helyszínt kimenteni: ' + str(munka))
-
-	#lower group
+	#extract location TODO
 	try:
-		group = driver.find_elements(By.CLASS_NAME, 'jobs-box__group')
-
-		#loop through name-value pairs
-		for element in group:
-			#get the children of each pair: name and value
-			children = element.find_elements(By.XPATH, ".//*")
-			titlr = children[0].text
-			descr = children[1]
-
-			#save value according to the pair name
-			if titlr == 'Seniority Level':
-				munka.seniority = descr.text
-			elif titlr == 'Employment Type':
-				munka.employment_type = descr.text
-			elif titlr == 'Industry':
-				for item in descr.find_elements(By.XPATH, ".//*"):
-					munka.industry_list.append(item.text)
-			elif titlr == 'Job Functions':
-				for item in descr.find_elements(By.XPATH, ".//*"):
-					munka.job_functions_list.append(item.text)
+		pass
 	except:
-		print('Nem sikerült a munkaleírás alsó táblázatából az adatokat kimenteni.')
+		pass
+
+	#extract experience_level TODO
+	try:
+		pass
+	except:
+		pass
+
+	#extract job_type TODO
+	try:
+		pass
+	except:
+		pass
+
+	#extract industry TODO
+	try:
+		pass
+	except:
+		pass
 	
 	return munka
 
@@ -347,7 +332,7 @@ def navigate(driver, page):
 
 	return munkak
 
-#export the extracted jobs to a CSV
+#export the extracted jobs to a CSV TODO
 def export(lista):
 	now = datetime.now()
 	file_name = now.strftime("%Y-%m-%d-%H-%M")
