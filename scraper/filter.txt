@@ -8,7 +8,7 @@ Location: Budapest
 	Past_Week: 
 	Past_24_hours: X
 --------------------
-#Eperience Level#
+#Experience Level#
 	Entry_level: 
 	Associate: 
 	Mid-Senior_level: 

@@ -1,1 +1,1 @@
-pyinstaller scraper.py -F
+pyinstaller Scraper.py -F
